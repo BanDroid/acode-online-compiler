@@ -1,26 +1,28 @@
-import plugin from '../plugin.json';
+import plugin from "../plugin.json";
 
-class AcodePlugin {
+const CONSTANT = {
+	api_url: "https://api.codex.jaagrav.in",
+};
 
-  async init() {
+class AcodeBasicOnlineCompiler {
+	async init() {}
 
-  }
-
-  async destroy() {
-
-  }
+	async destroy() {}
 }
 
 if (window.acode) {
-  const acodePlugin = new AcodePlugin();
-  acode.setPluginInit(plugin.id, (baseUrl, $page, { cacheFileUrl, cacheFile }) => {
-    if (!baseUrl.endsWith('/')) {
-      baseUrl += '/';
-    }
-    acodePlugin.baseUrl = baseUrl;
-    acodePlugin.init($page, cacheFile, cacheFileUrl);
-  });
-  acode.setPluginUnmount(plugin.id, () => {
-    acodePlugin.destroy();
-  });
+	const acodePlugin = new AcodeBasicOnlineCompiler();
+	acode.setPluginInit(
+		plugin.id,
+		(baseUrl, $page, { cacheFileUrl, cacheFile }) => {
+			if (!baseUrl.endsWith("/")) {
+				baseUrl += "/";
+			}
+			acodePlugin.baseUrl = baseUrl;
+			acodePlugin.init($page, cacheFile, cacheFileUrl);
+		}
+	);
+	acode.setPluginUnmount(plugin.id, () => {
+		acodePlugin.destroy();
+	});
 }

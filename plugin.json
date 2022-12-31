@@ -1,14 +1,14 @@
 {
-  "id": "acode.plugin",
-  "name": "Plugin",
-  "main": "dist/main.js",
-  "version": "1.0.0",
-  "readme": "readme.md",
-  "icon": "icon.png",
-  "files": [],
-  "author": {
-    "name": "",
-    "email": "",
-    "github": ""
-  }
+	"id": "acode.plugin.online.compiler",
+	"name": "Basic Online Compiler",
+	"main": "dist/main.js",
+	"version": "1.0.0",
+	"readme": "readme.md",
+	"icon": "icon.png",
+	"files": [],
+	"author": {
+		"name": "Fitrah Nuno Syahbani (BanDroid)",
+		"email": "dbbhuh5@gmail.com",
+		"github": "https://github.com/BanDroid"
+	}
 }
