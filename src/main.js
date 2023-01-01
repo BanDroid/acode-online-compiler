@@ -1,13 +1,38 @@
 import plugin from "../plugin.json";
 
-const CONSTANT = {
+const axios = require("axios");
+const qs = require("qs");
+
+const CONSTANT = Object.freeze({
 	api_url: "https://api.codex.jaagrav.in",
-};
+});
 
 class AcodeBasicOnlineCompiler {
-	async init() {}
+	constructor() {
+		this.command = {
+			name: "CodeX compiler",
+			description: "CodeX compiler",
+			exec: this.compile.bind(this),
+		};
+		this.config = {
+			method: "post",
+			url: CONSTANT.api_url,
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			data: "",
+		};
+	}
 
-	async destroy() {}
+	async init() {
+		editorManager.editor.commands.addCommand(this.command);
+	}
+
+	async compile() {}
+
+	async destroy() {
+		editorManager.editor.commands.removeCommand(this.command);
+	}
 }
 
 if (window.acode) {
