@@ -1,6 +1,5 @@
 import plugin from "../plugin.json";
 
-const axios = require("axios");
 const qs = require("qs");
 
 const CONSTANT = Object.freeze({
@@ -28,7 +27,72 @@ class AcodeBasicOnlineCompiler {
 		editorManager.editor.commands.addCommand(this.command);
 	}
 
-	async compile() {}
+	async userInput() {
+		const options = {};
+		const input = await acode.prompt(
+			"Input for your program (every input is separated by new line)",
+			"",
+			"textarea",
+			options
+		);
+		return input && input !== null && input !== undefined
+			? String(input)
+			: "";
+	}
+
+	async compile() {
+		const input = await this.userInput();
+
+		const loadingDialog = acode.loader("Please wait...", "compiling");
+		loadingDialog.show();
+
+		const fileExt = editorManager.activeFile.filename
+			.match(/\.[0-9a-z]+$/i)[0]
+			.replace(".", "");
+		const data = qs.stringify({
+			code: editorManager.editor.getValue() || "",
+			language: fileExt,
+			input: input.replaceAll("\n", "\\n"),
+		});
+
+		const config = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded",
+			},
+			body: data,
+		};
+		fetch(CONSTANT.api_url, config)
+			.then((res) => res.json())
+			.then((result) => {
+				loadingDialog.destroy();
+				if (result.error) {
+					this.showOutput(true, result);
+				} else {
+					this.showOutput(false, result);
+				}
+			})
+			.catch((err) => {
+				loadingDialog.destroy();
+				this.showOutput(true, {
+					error: err,
+				});
+			});
+	}
+
+	showOutput(isError, outputObj) {
+		if (isError) {
+			acode.alert(
+				"Compiler Error",
+				outputObj.error.replaceAll("\\n", "\n")
+			);
+		} else {
+			acode.alert(
+				"Compile Success",
+				outputObj.output.replaceAll("\\n", "\n")
+			);
+		}
+	}
 
 	async destroy() {
 		editorManager.editor.commands.removeCommand(this.command);

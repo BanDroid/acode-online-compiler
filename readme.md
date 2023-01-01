@@ -9,7 +9,7 @@ For supported languages, you have to check in CodeX-API repository i mentioned.
 
 1. Go to settings > Plugins > All > search for `Basic Online Compiler`.
 2. Click install.
-3. Re-open `Acode Editor` app.
+3. Re-open `Acode Editor`.
 
 ## Usage
 
@@ -24,7 +24,7 @@ For supported languages, you have to check in CodeX-API repository i mentioned.
 ### Limitations
 
 -   since it is online compiler, it could only run a single file, and it does not generate binaries.
--   this plugin does not provide interactive consoles for Input and Output.
+-   this plugin does not provide interactive consoles for Input and Output (every input is separated by new line).
 
 ### Languages Supported
 
