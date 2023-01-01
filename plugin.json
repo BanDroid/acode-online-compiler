@@ -4,7 +4,7 @@
 	"main": "dist/main.js",
 	"version": "1.0.0",
 	"readme": "readme.md",
-	"icon": "compiler.png",
+	"icon": "icon.png",
 	"files": [],
 	"author": {
 		"name": "Fitrah Nuno Syahbani (BanDroid)",
