@@ -7,7 +7,6 @@
 	"author": "BanDroid <dbbhuh5@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
-		"axios": "^1.2.2",
 		"html-tag-js": "^1.1.22",
 		"qs": "^6.11.0"
 	},

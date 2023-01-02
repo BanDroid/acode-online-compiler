@@ -2,3 +2,4 @@ node_modules
 yarn.lock
 test.js
 api.md
+todo.md

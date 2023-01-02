@@ -30,7 +30,7 @@ class AcodeBasicOnlineCompiler {
 	async userInput() {
 		const options = {};
 		const input = await acode.prompt(
-			"Input for your program (every input is separated by new line)",
+			"Input for your program",
 			"",
 			"textarea",
 			options
@@ -82,16 +82,20 @@ class AcodeBasicOnlineCompiler {
 
 	showOutput(isError, outputObj) {
 		if (isError) {
-			acode.alert(
+			this.alert(
 				"Compiler Error",
 				outputObj.error.replaceAll("\\n", "\n")
 			);
 		} else {
-			acode.alert(
+			this.alert(
 				"Compile Success",
 				outputObj.output.replaceAll("\\n", "\n")
 			);
 		}
+	}
+
+	alert(title = "", message = "", callback) {
+		acode.alert(title, message, callback);
 	}
 
 	async destroy() {

@@ -1,7 +1,6 @@
 # [acode-online-compiler](https://github.com/BanDroid/acode-online-compiler)
 
-Online compiler plugin for acode editor using [CodeX-API](https://github.com/Jaagrav/CodeX-API).
-For supported languages, you have to check in CodeX-API repository i mentioned.
+Online compiler plugin for [Acode Editor](https://acode.foxdebug.com/) using [CodeX-API](https://github.com/Jaagrav/CodeX-API).
 
 ### Authors
 
@@ -28,7 +27,7 @@ For supported languages, you have to check in CodeX-API repository i mentioned.
 ### Limitations
 
 -   since it is online compiler, it could only run a single file, and it does not generate binaries.
--   this plugin does not provide interactive consoles for Input and Output (every input is separated by new line).
+-   this plugin does not provide interactive consoles for Input and Output (every input is separated by new line for strings and whitespace for numbers).
 
 ### Languages Supported
 
@@ -44,7 +43,7 @@ For supported languages, you have to check in CodeX-API repository i mentioned.
 
 ## Contributing
 
-Contributions are always welcome!
+You could contribute on working with the code, or you could give some donations for authors and contributors [here](./donate.md).
 
 ## License
 
