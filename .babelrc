@@ -9,12 +9,5 @@
       ]
     }
   },
-  "plugins": [
-    "html-tag-js/jsx/jsx-to-tag.js",
-    "html-tag-js/jsx/syntax-parser.js",
-    [
-      "@babel/plugin-transform-runtime"
-    ]
-  ],
-  "compact": true
+  "compact": false
 }
