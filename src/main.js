@@ -1,5 +1,6 @@
 import plugin from "../plugin.json";
-
+import tag from 'html-tag-js';
+import style from './style.scss';
 const qs = require("qs");
 
 const CONSTANT = Object.freeze({
@@ -23,8 +24,21 @@ class AcodeBasicOnlineCompiler {
 		};
 	}
 
-	async init() {
+	async init($page) {
+	    $page.id = 'acode-online-compiler';
+	    this.$page = $page;
+	    this.$style = tag('style',{
+	        textContent: style,
+	    });
+	    this.outputArea = tag('div',{
+	        className: 'outputArea',
+	    });
+	    this.$page.append(this.outputArea);
 		editorManager.editor.commands.addCommand(this.command);
+		document.head.append(this.$style);
+		this.$page.onhide = () => {
+		    this.outputArea.innerHTML = '';
+		}
 	}
 
 	async userInput() {
@@ -81,19 +95,17 @@ class AcodeBasicOnlineCompiler {
 	}
 
 	showOutput(isError, outputObj) {
+	    
 		if (isError) {
-			acode.alert(
-				"Compiler Error",
-				outputObj.error.replaceAll("\\n", "\n")
-			);
+		    this.$page.settitle('Online Compiler(Error)');
+		    this.$page.show();
+		    this.outputArea.innerHTML = outputObj.error.replaceAll("\n", "<br/>");
 		} else {
-			acode.alert(
-				"Compile Success",
-				outputObj.output.replaceAll("\\n", "\n")
-			);
+		    this.$page.settitle('Online Compiler(Success)');
+		    this.$page.show();
+		    this.outputArea.innerHTML = outputObj.output.replaceAll("\n", "<br/>");
 		}
 	}
-
 	async destroy() {
 		editorManager.editor.commands.removeCommand(this.command);
 	}

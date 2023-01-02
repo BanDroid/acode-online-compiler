@@ -1,6 +1,6 @@
 {
 	"name": "acode-online-compiler",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Basic Online Compiler for acode editor using CodeX-API.",
 	"main": "dist/main.js",
 	"repository": "https://github.com/BanDroid/acode-online-compiler.git",
@@ -17,7 +17,13 @@
 		"@babel/plugin-transform-runtime": "^7.19.6",
 		"@babel/preset-env": "^7.18.10",
 		"babel-loader": "^9.1.0",
+		"autoprefixer": "^10.4.13",
 		"live-server": "^1.2.2",
+		"postcss": "^8.4.20",
+        "postcss-loader": "^7.0.2",
+        "raw-loader": "^4.0.2",
+        "sass": "^1.57.1",
+        "sass-loader": "^13.2.0",
 		"webpack": "^5.74.0",
 		"webpack-cli": "^5.0.0"
 	},
