@@ -5,36 +5,31 @@ const qs = require("qs");
 
 const CONSTANT = Object.freeze({
 	api_url: "https://api.codex.jaagrav.in",
+	languages: ["java", "py", "cpp", "c", "go", "cs", "js"],
 });
 
 class AcodeBasicOnlineCompiler {
+	#worker = null;
+
 	constructor() {
 		this.command = {
 			name: "CodeX compiler",
 			description: "CodeX compiler",
 			exec: this.compile.bind(this),
 		};
-		this.config = {
-			method: "post",
-			url: CONSTANT.api_url,
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
-			data: "",
-		};
 	}
 
 	async init($page) {
+		editorManager.editor.commands.addCommand(this.command);
 		$page.id = "acode-online-compiler";
 		this.$page = $page;
 		this.$style = tag("style", {
 			textContent: style,
 		});
-		this.outputArea = tag("div", {
+		this.outputArea = tag("pre", {
 			className: "outputArea",
 		});
 		this.$page.append(this.outputArea);
-		editorManager.editor.commands.addCommand(this.command);
 		document.head.append(this.$style);
 		this.$page.onhide = () => {
 			this.outputArea.innerHTML = "";
@@ -42,7 +37,7 @@ class AcodeBasicOnlineCompiler {
 	}
 
 	async userInput() {
-		const options = {};
+		const options = { required: false };
 		const input = await acode.prompt(
 			"Input for your program",
 			"",
@@ -55,18 +50,27 @@ class AcodeBasicOnlineCompiler {
 	}
 
 	async compile() {
-		const input = await this.userInput();
-
-		const loadingDialog = acode.loader("Please wait...", "compiling");
-		loadingDialog.show();
-
 		const fileExt = editorManager.activeFile.filename
 			.match(/\.[0-9a-z]+$/i)[0]
 			.replace(".", "");
+		// check if file language type is supported
+		if (!CONSTANT.languages.find((it) => it === fileExt)) {
+			acode.alert(
+				"Sorry!",
+				"The file you want to compile is currently not supported. check the plugin details."
+			);
+			return;
+		}
+
+		const input = await this.userInput();
+
+		this.loadingDialog = acode.loader("Please wait...", "compiling");
+		this.loadingDialog.show();
+
 		const data = qs.stringify({
 			code: editorManager.editor.getValue() || "",
 			language: fileExt,
-			input: input.replaceAll("\n", "\\n"),
+			input: input, // .replaceAll("\n", "\\n"),
 		});
 
 		const config = {
@@ -76,41 +80,41 @@ class AcodeBasicOnlineCompiler {
 			},
 			body: data,
 		};
-		fetch(CONSTANT.api_url, config)
-			.then((res) => res.json())
-			.then((result) => {
-				loadingDialog.destroy();
-				if (result.error) {
-					this.showOutput(true, result);
-				} else {
-					this.showOutput(false, result);
-				}
-			})
-			.catch((err) => {
-				loadingDialog.destroy();
-				this.showOutput(true, {
-					error: err,
-				});
-			});
+		this.runWorker(config);
+	}
+
+	runWorker(config) {
+		if (this.#worker) this.#worker.terminate();
+		this.#worker = new Worker(new URL("./compile.js", import.meta.url));
+		this.#worker.onmessage = (e) => {
+			let isError = false;
+			const data = e.data;
+			if (
+				data.action === "compile_failed" ||
+				data.action === "request_failed"
+			) {
+				isError = true;
+			}
+			this.showOutput(isError, data.payload);
+		};
+		this.#worker.postMessage(config);
 	}
 
 	showOutput(isError, outputObj) {
+		this.loadingDialog.destroy();
 		if (isError) {
 			this.$page.settitle("Online Compiler(Error)");
 			this.$page.show();
-			this.outputArea.innerHTML = outputObj.error.replaceAll(
-				"\n",
-				"<br/>"
-			);
+			this.outputArea.innerHTML = outputObj.error;
 		} else {
 			this.$page.settitle("Online Compiler(Success)");
 			this.$page.show();
-			this.outputArea.innerHTML = outputObj.output.replaceAll(
-				"\n",
-				"<br/>"
-			);
+			this.outputArea.innerHTML = outputObj.output;
 		}
+		this.#worker.terminate();
+		this.#worker = null;
 	}
+
 	async destroy() {
 		editorManager.editor.commands.removeCommand(this.command);
 	}

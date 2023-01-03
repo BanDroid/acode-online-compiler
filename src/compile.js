@@ -1,12 +1,10 @@
-const qs = require("qs");
-
 const CONSTANT = Object.freeze({
 	api_url: "https://api.codex.jaagrav.in",
 });
 
 async function compileWorker(config) {
 	try {
-		const res = await fetch(api_url, config);
+		const res = await fetch(CONSTANT.api_url, config);
 		const data = await res.json();
 		return data;
 	} catch (error) {
@@ -14,9 +12,9 @@ async function compileWorker(config) {
 	}
 }
 
-self.addEventListener("message", ({ data: config }) => {
-	compileWorker(config)
-		.then((res) => {
+self.onmessage = (e) => {
+	compileWorker(e.data)
+		.then((data) => {
 			if (data.error) {
 				self.postMessage({
 					action: "compile_failed",
@@ -37,4 +35,4 @@ self.addEventListener("message", ({ data: config }) => {
 				},
 			});
 		});
-});
+};

@@ -1,21 +1,22 @@
-#acode-online-compiler{
-    .outputArea{
-        padding: 20px;
-        height: 100%;
-        overflow: auto;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        -webkit-hyphens: auto;
-        -ms-hyphens: auto;
-        hyphens: auto;
-        &::-webkit-scrollbar {
-            width: 8px;
-        }
-        &::-webkit-scrollbar-track {
-            background: var(--secondary-color);
-        }
-        &::-webkit-scrollbar-thumb {
-            background: var(--scrollbar-color);
-        }
-    }
+#acode-online-compiler {
+	.outputArea {
+		padding: 20px;
+		height: 100%;
+		overflow: auto;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+		-webkit-hyphens: auto;
+		-ms-hyphens: auto;
+		hyphens: auto;
+		user-select: auto;
+		&::-webkit-scrollbar {
+			width: 8px;
+		}
+		&::-webkit-scrollbar-track {
+			background: var(--secondary-color);
+		}
+		&::-webkit-scrollbar-thumb {
+			background: var(--scrollbar-color);
+		}
+	}
 }

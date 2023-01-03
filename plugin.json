@@ -5,7 +5,13 @@
 	"version": "1.0.1",
 	"readme": "readme.md",
 	"icon": "icon.png",
-	"files": ["worker.js"],
+	"files": [
+		"compile.js",
+		"326.js",
+		"main.js.LICENSE.txt",
+		"compile.js.LICENSE.txt",
+		"326.js.LICENSE.txt"
+	],
 	"author": {
 		"name": "Fitrah Nuno Syahbani (BanDroid)",
 		"email": "dbbhuh5@gmail.com",
