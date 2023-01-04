@@ -6,6 +6,9 @@ Online compiler plugin for [Acode Editor](https://acode.foxdebug.com/) using [Co
 
 -   [@BanDroid](https://github.com/BanDroid)
 
+### Contributors
+-   [@bajrangCoder](https://github.com/bajrangCoder)
+
 ---
 
 ## Installation
