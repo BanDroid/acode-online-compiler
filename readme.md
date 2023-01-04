@@ -58,7 +58,7 @@ in dynamic-type language, you dont have to worry about this. soon we'll implemen
 
 ## Contributing
 
-You could contribute on working with the code, or you could give some donations for authors and contributors [here](./donate.md).
+You could contribute on working with the code, or you could give some donations for authors and contributors [here](https://github.com/BanDroid/acode-online-compiler/blob/main/donate.md).
 
 ## License
 
