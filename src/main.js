@@ -32,7 +32,7 @@ class AcodeBasicOnlineCompiler {
 		this.$page.append(this.outputArea);
 		document.head.append(this.$style);
 		this.$page.onhide = () => {
-			this.outputArea.innerHTML = "";
+			this.outputArea.innerText = "";
 		};
 	}
 
@@ -105,11 +105,11 @@ class AcodeBasicOnlineCompiler {
 		if (isError) {
 			this.$page.settitle("Online Compiler(Error)");
 			this.$page.show();
-			this.outputArea.innerHTML = outputObj.error;
+			this.outputArea.innerText = outputObj.error;
 		} else {
 			this.$page.settitle("Online Compiler(Success)");
 			this.$page.show();
-			this.outputArea.innerHTML = outputObj.output;
+			this.outputArea.innerText = outputObj.output;
 		}
 		this.#worker.terminate();
 		this.#worker = null;
